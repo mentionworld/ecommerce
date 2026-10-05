@@ -1,11 +1,11 @@
 
 
-import { TProduct, TShowcaseResponse } from "@/types";
+import { TShowcaseResponse } from "@/types";
+import { getApiBaseUrl } from "./getApiBaseUrl";
 
 
 export async function getShowcaseProducts(): Promise<TShowcaseResponse> {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
+    const baseUrl = getApiBaseUrl();
     const url = `${baseUrl}/api/products/showcase`;
 
     const response = await fetch(url, {

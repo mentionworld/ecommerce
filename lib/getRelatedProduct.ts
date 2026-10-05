@@ -1,10 +1,11 @@
 
+import { getApiBaseUrl } from "./getApiBaseUrl";
+
 export async function getRelatedProduct(slug: string) {
 
     try {
 
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
+        const baseUrl = getApiBaseUrl();
         const url = `${baseUrl}/api/products/${slug}/related`;
 
         const res = await fetch(url, {
@@ -18,7 +19,7 @@ export async function getRelatedProduct(slug: string) {
         const data = await res.json()
         return data.product
 
-    } catch (err) {
+    } catch {
         console.log('Error while fetching the related products')
         return []
 

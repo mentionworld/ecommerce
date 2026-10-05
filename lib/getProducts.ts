@@ -1,5 +1,6 @@
 
 import { TProductsResponse } from '@/types'
+import { getApiBaseUrl } from './getApiBaseUrl'
 
 
 export async function getProducts(
@@ -15,7 +16,7 @@ export async function getProducts(
             }
         }
 
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+        const baseUrl = getApiBaseUrl()
 
         const url = `${baseUrl}/api/products?${params.toString()}`;
 

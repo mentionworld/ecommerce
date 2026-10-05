@@ -1,8 +1,7 @@
-import { TProduct } from "@/types";
+import { getApiBaseUrl } from "./getApiBaseUrl";
 
 export async function getProduct(slug: string) {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
+    const baseUrl = getApiBaseUrl();
     const url = `${baseUrl}/api/products/${slug}`;
 
     const response = await fetch(url, {
