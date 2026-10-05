@@ -1,32 +1,30 @@
 
-
 import { TShowcaseResponse } from "@/types";
-import { getApiBaseUrl } from "./getApiBaseUrl";
+import { connectDB } from "./db";
+import Product from "@/models/Product.model";
 
 
 export async function getShowcaseProducts(): Promise<TShowcaseResponse> {
-    const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}/api/products/showcase`;
+    await connectDB();
 
-    const response = await fetch(url, {
-        cache: 'no-store'
-    });
+    const activeFilter = { isActive: true };
+    const [featured, newArrivals, topRated, deals] = await Promise.all([
+        Product.find({ ...activeFilter, isFeatured: true }).limit(6).lean(),
+        Product.find(activeFilter).sort({ createdAt: -1 }).limit(6).lean(),
+        Product.find({ ...activeFilter, "ratings.count": { $gt: 0 } })
+            .sort({ "ratings.average": -1 })
+            .limit(6)
+            .lean(),
+        Product.find({
+            ...activeFilter,
+            $expr: { $gt: ["$comparePrice", "$price"] },
+        })
+            .limit(6)
+            .lean(),
+    ]);
 
-    if (response.status === 404) {
-        return {
-            featured: [],
-            newArrivals: [],
-            topRated: [],
-            deals: []
-        };
-    }
-
-    if (!response.ok) {
-        throw new Error("Error in fetching products");
-    }
-
-    const { featured, newArrivals, topRated, deals } = await response.json();
-
-    return { featured, newArrivals, topRated, deals };
+    return JSON.parse(
+        JSON.stringify({ featured, newArrivals, topRated, deals })
+    ) as TShowcaseResponse;
 
 }
