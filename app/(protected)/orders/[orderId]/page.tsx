@@ -58,7 +58,7 @@ export default function OrderDetailPage({ params }: TProps) {
     const paymentStyle = getPaymentStatusStyle(order.paymentStatus)
 
     return (
-        <main className="max-w-3xl mx-auto px-6 py-10">
+        <main className="max-w-3xl w-full mx-auto px-6 py-10">
 
             {order.paymentStatus === "paid" && (
                 <div className="flex items-center gap-3 bg-success/10 text-success
