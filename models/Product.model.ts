@@ -90,8 +90,6 @@ const productSchema = new mongoose.Schema({
 }, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 
 
-productSchema.index({ slug: 1 })
-
 productSchema.index({ category: 1 })
 
 productSchema.index({ brand: 1 })

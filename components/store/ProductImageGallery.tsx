@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import ProductImage from "./ProductImage";
 
 type Props = {
     images: string[];
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function ProductImageGallery({ images, name, discountPercentage }: Props) {
-    const allImages = images.length > 0 ? images : ["/placeholder.png"];
+    const allImages = images.length > 0 ? images : ["/no-image.svg"];
     const [activeIndex, setActiveIndex] = useState(0);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [zoom, setZoom] = useState(false);
@@ -48,7 +48,7 @@ export default function ProductImageGallery({ images, name, discountPercentage }
                     role="button"
                     aria-label="Open image lightbox"
                 >
-                    <Image
+                    <ProductImage
                         src={allImages[activeIndex]}
                         alt={`${name} – image ${activeIndex + 1}`}
                         fill
@@ -127,7 +127,7 @@ export default function ProductImageGallery({ images, name, discountPercentage }
                                         : "border-transparent opacity-60 hover:opacity-100 hover:border-border"
                                     }`}
                             >
-                                <Image
+                                <ProductImage
                                     src={src}
                                     alt={`${name} thumbnail ${i + 1}`}
                                     fill
@@ -176,7 +176,7 @@ export default function ProductImageGallery({ images, name, discountPercentage }
                         className="relative w-full max-w-3xl aspect-square mx-16"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <Image
+                        <ProductImage
                             src={allImages[activeIndex]}
                             alt={`${name} – image ${activeIndex + 1}`}
                             fill
@@ -209,7 +209,7 @@ export default function ProductImageGallery({ images, name, discountPercentage }
                                             : "border-white/30 opacity-50 hover:opacity-100"
                                         }`}
                                 >
-                                    <Image
+                                    <ProductImage
                                         src={src}
                                         alt={`Thumbnail ${i + 1}`}
                                         fill

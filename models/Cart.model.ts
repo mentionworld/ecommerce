@@ -1,5 +1,5 @@
 
-import mongoose, { mongo } from 'mongoose'
+import mongoose from 'mongoose'
 
 const cartItemSchema = new mongoose.Schema({
     product: {
@@ -34,8 +34,6 @@ const cartSchema = new mongoose.Schema({
     },
 }, { timestamps: true })
 
-
-cartSchema.index({ user: 1 })
 
 const Cart = mongoose.models.Cart || mongoose.model('Cart', cartSchema)
 

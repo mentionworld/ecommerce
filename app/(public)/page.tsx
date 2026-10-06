@@ -1,9 +1,12 @@
 import ProductCarousel from "@/components/store/ProductCarousel";
 import HeroCarousel from "@/components/store/HeroCarousel";
 import { getShowcaseProducts } from "@/lib/getShowCase";
+import { io } from "next/cache";
 import { Suspense } from "react";
 
 async function ShowcaseSections() {
+  await io();
+
   let showcase;
 
   try {

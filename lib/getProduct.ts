@@ -1,23 +1,18 @@
-import { getApiBaseUrl } from "./getApiBaseUrl";
+import { connectDB } from "@/lib/db";
+import Product from "@/models/Product.model";
+import { TProduct } from "@/types";
 
-export async function getProduct(slug: string) {
-    const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}/api/products/${slug}`;
+export async function getProduct(slug: string): Promise<TProduct | null> {
+    await connectDB();
 
-    const response = await fetch(url, {
-        cache: 'no-store'
-    });
+    const product = await Product.findOne({
+        slug: slug.toLowerCase(),
+        isActive: true,
+    }).lean();
 
-    if (response.status === 404) {
-        return null
+    if (!product) {
+        return null;
     }
 
-    if (!response.ok) {
-        throw new Error("Error in fetching products");
-    }
-
-    const data = await response.json();
-
-    return data.product;
-
+    return JSON.parse(JSON.stringify(product)) as TProduct;
 }

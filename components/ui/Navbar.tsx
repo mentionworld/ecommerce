@@ -79,14 +79,10 @@ export default function Navbar() {
                                         </Link>
                                     )}
 
-                                    <Link
-                                        href="/profile"
-                                        className="hidden sm:flex items-center gap-1.5 text-sm font-medium
-                      text-text hover:text-primary transition-colors"
-                                    >
+                                    <span className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-text">
                                         <User size={16} />
                                         Hi, {user?.name.split(" ")[0]}
-                                    </Link>
+                                    </span>
 
                                     <button
                                         onClick={handleLogout}

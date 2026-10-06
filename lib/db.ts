@@ -30,7 +30,6 @@ export async function connectDB() {
     const readyState = mongoose.connection.readyState;
 
     if (readyState === 1) {
-        console.log("MongoDB is already connected");
         return;
     }
 

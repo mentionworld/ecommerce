@@ -1,6 +1,7 @@
 import { getRelatedProduct } from "@/lib/getRelatedProduct"
 import { TProduct } from "@/types"
 import ProductCard from "./ProductCard"
+import { io } from "next/cache"
 
 
 
@@ -9,10 +10,19 @@ type TProps = {
 }
 
 export default async function RelatedProducts({ slug }: TProps) {
+    await io()
 
-    const products: TProduct[] = await getRelatedProduct(slug)
-
-    console.log(products)
+    let products: TProduct[]
+    try {
+        products = await getRelatedProduct(slug)
+    } catch (error) {
+        console.error("Failed to load related products:", error)
+        return (
+            <p className="mt-16 text-muted" role="status">
+                Related products are temporarily unavailable.
+            </p>
+        )
+    }
 
     if (products.length == 0) {
         return null

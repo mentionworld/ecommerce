@@ -1,6 +1,6 @@
 import { getProduct } from "@/lib/getProduct";
 import { TProduct } from "@/types";
-import { Check, ShoppingCart, Star, X } from "lucide-react";
+import { Check, Star, X } from "lucide-react";
 import { notFound } from "next/navigation";
 import ProductImageGallery from "@/components/store/ProductImageGallery";
 import type { Metadata } from "next";
@@ -16,7 +16,7 @@ type TProps = {
 export async function generateMetadata({ params }: TProps): Promise<Metadata> {
     const { slug } = await params;
 
-    const product: TProduct = await getProduct(slug)
+    const product: TProduct | null = await getProduct(slug)
 
     if (!product) {
         return {
@@ -59,7 +59,7 @@ export default async function ProductDetails({ params }: TProps) {
 
     const { slug } = await params;
 
-    const product: TProduct = await getProduct(slug)
+    const product: TProduct | null = await getProduct(slug)
 
     if (!product) {
         return notFound()

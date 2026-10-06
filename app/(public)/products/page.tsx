@@ -4,6 +4,7 @@ import Pagination from "@/components/store/Pagination"
 import ProductCard from "@/components/store/ProductCard"
 import SortDropdown from "@/components/store/SortDropdown"
 import { getProducts } from "@/lib/getProducts"
+import { TProductsResponse } from "@/types"
 
 
 type TProps = {
@@ -17,7 +18,20 @@ export default async function ProductsPage({
 
     const params = await searchParams
 
-    const { products, pagination, filters } = await getProducts(params)
+    let data: TProductsResponse
+    try {
+        data = await getProducts(params)
+    } catch (error) {
+        console.error("Failed to load products page:", error)
+        return (
+            <main className="max-w-6xl w-full mx-auto px-6 py-10" role="alert">
+                <h1 className="text-2xl font-bold text-text">Products are temporarily unavailable</h1>
+                <p className="text-muted mt-2">Please try again in a little while.</p>
+            </main>
+        )
+    }
+
+    const { products, pagination, filters } = data
 
     return (
         <div className="max-w-6xl w-full mx-auto px-6 py-10">

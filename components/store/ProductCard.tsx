@@ -2,8 +2,8 @@
 
 import { TProduct } from "@/types"
 import { Star } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
+import ProductImage from "./ProductImage"
 
 
 type TProps = {
@@ -13,7 +13,7 @@ type TProps = {
 
 export default function ProductCard({ product }: TProps) {
 
-    const mainImage = product.images[0] || '/no-image.png'
+    const mainImage = product.images[0] || "/no-image.svg"
     return (
         <Link
             className="group bg-surface border border-border rounded-xl overflow-hidden
@@ -21,12 +21,13 @@ export default function ProductCard({ product }: TProps) {
             href={`/products/${product.slug}`}>
             <div className="relative aspect-square bg-bg overflow-hidden">
 
-                <Image
+                <ProductImage
                     src={mainImage}
                     alt={product.name}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-200" />
+                    className="object-cover group-hover:scale-105 transition-transform duration-200"
+                />
 
 
                 {product.discountPercentage > 0 && <div className="absolute top-3 left-3 bg-error text-white
